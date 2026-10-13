@@ -29,37 +29,189 @@
 
         /* 3D Book Container */
         #book-container {
-            perspective: 2000px;
+            perspective: 2200px;
             z-index: 50;
         }
 
-        /* The Book Cover */
+        /* 3D Book Wrapper */
+        #book-perspective-wrapper {
+            perspective: 2200px;
+            transform-style: preserve-3d;
+            transition: transform 0.25s ease-out;
+        }
+
+        /* Gilded Pages Stack (3D Book thickness on right and bottom) */
+        .book-pages-side {
+            background: repeating-linear-gradient(
+                to right,
+                #7a5818 0px,
+                #ecd690 1.5px,
+                #b89035 2.5px,
+                #543a08 3.5px,
+                #fff1bd 4.5px,
+                #9b7222 5.5px
+            );
+            box-shadow: 
+                inset 3px 0 6px rgba(0, 0, 0, 0.7),
+                5px 0 15px rgba(0, 0, 0, 0.8),
+                0 0 25px rgba(212, 175, 55, 0.3);
+            border-radius: 0 6px 6px 0;
+        }
+
+        .book-pages-bottom {
+            background: repeating-linear-gradient(
+                to bottom,
+                #7a5818 0px,
+                #ecd690 1.5px,
+                #b89035 2.5px,
+                #543a08 3.5px,
+                #fff1bd 4.5px,
+                #9b7222 5.5px
+            );
+            box-shadow: 
+                inset 0 3px 6px rgba(0, 0, 0, 0.7),
+                0 10px 22px rgba(0, 0, 0, 0.85),
+                0 6px 30px rgba(212, 175, 55, 0.25);
+            border-radius: 0 0 6px 6px;
+        }
+
+        /* Inside Page (visible when cover swings open) */
+        .book-inside-page {
+            background: radial-gradient(circle at 60% 40%, #fefcf3 0%, #ecdcb0 65%, #cbb17b 100%);
+            box-shadow: inset 0 0 50px rgba(110, 70, 20, 0.3), 10px 10px 30px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Satin Gold Ribbon Bookmark */
+        .book-ribbon {
+            width: 26px;
+            height: 60px;
+            background: linear-gradient(135deg, #d4af37 0%, #ecd690 35%, #9b7222 70%, #fff2bf 100%);
+            box-shadow: 3px 6px 14px rgba(0, 0, 0, 0.7), 0 0 12px rgba(212, 175, 55, 0.5);
+            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 50% 82%, 0% 100%);
+            animation: ribbonSway 4s ease-in-out infinite alternate;
+            transform-origin: top center;
+        }
+        @keyframes ribbonSway {
+            0% { transform: rotate(-3deg); }
+            100% { transform: rotate(3deg); }
+        }
+
+        /* Antique Leather Texture on Cover */
+        .antique-leather {
+            background-color: #0c2616;
+            background-image: 
+                radial-gradient(ellipse at 50% 35%, rgba(22, 68, 39, 0.96) 0%, rgba(12, 36, 21, 0.98) 60%, rgba(4, 15, 8, 1) 100%),
+                url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='leatherNoise'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='matrix' values='0 0 0 0 0.8  0 0 0 0 0.8  0 0 0 0 0.8  0 0 0 0 0.08 0'/></filter><rect width='100%' height='100%' filter='url(%23leatherNoise)'/></svg>");
+            box-shadow: 
+                18px 24px 50px rgba(0, 0, 0, 0.95),
+                -4px 0 20px rgba(0, 0, 0, 0.8),
+                inset 0 0 90px rgba(0, 0, 0, 0.85),
+                inset 1px 1px 3px rgba(255, 245, 180, 0.25),
+                0 0 55px rgba(212, 175, 55, 0.25);
+        }
+
+        /* Spine details: rounded lighting & hinge gutter */
+        .book-spine-lighting {
+            background: linear-gradient(
+                to right,
+                rgba(0, 0, 0, 0.95) 0%,
+                rgba(255, 255, 255, 0.1) 8%,
+                rgba(0, 0, 0, 0.75) 20%,
+                rgba(0, 0, 0, 0.25) 27%,
+                rgba(212, 175, 55, 0.18) 29%,
+                rgba(0, 0, 0, 0.85) 32%,
+                transparent 40%
+            );
+        }
+
+        .book-hinge-crease {
+            left: 28px;
+            width: 3px;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.95), rgba(212, 175, 55, 0.35), rgba(0, 0, 0, 0.8));
+            box-shadow: -1px 0 3px rgba(0, 0, 0, 0.9), 1px 0 2px rgba(255, 240, 160, 0.25);
+        }
+
+        /* The Book Cover Motion */
         #book-cover {
             transform-style: preserve-3d;
             transform-origin: left center;
-            transition: transform 1.8s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 1.5s ease-in-out;
-            transition-delay: 0s, 0.5s;
+            transition: transform 1.6s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 1.3s ease-in-out;
+            will-change: transform, opacity;
         }
 
         #book-cover.open {
-            transform: rotateY(-130deg) scale(1.1);
+            transform: rotateY(-130deg) scale(1.05) !important;
             opacity: 0;
             pointer-events: none;
         }
 
-        /* Gold Foil Effect Animated */
+        /* High-Luster Gold Foil */
         @keyframes shine {
-            to { background-position: 200% center; }
+            0% { background-position: 0% center; }
+            100% { background-position: 200% center; }
         }
         .gold-foil {
-            background: linear-gradient(to right, #bf953f 20%, #fcf6ba 40%, #b38728 60%, #fbf5b7 80%, #aa771c 100%);
+            background: linear-gradient(
+                120deg, 
+                #b8860b 0%, 
+                #f1d279 20%, 
+                #ffffff 40%, 
+                #d4af37 60%, 
+                #fcf6ba 80%, 
+                #996515 100%
+            );
             background-size: 200% auto;
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            text-shadow: 
+                0 1px 1px rgba(255, 245, 180, 0.4),
+                0 2px 4px rgba(0, 0, 0, 0.9);
             animation: shine 4s linear infinite;
         }
+
+        /* Continuous Glint / Shimmer across book cover */
+        @keyframes bookShimmerSweep {
+            0% { transform: translateX(-150%) rotate(25deg); opacity: 0; }
+            12% { opacity: 0.75; }
+            30% { transform: translateX(250%) rotate(25deg); opacity: 0; }
+            100% { transform: translateX(250%) rotate(25deg); opacity: 0; }
+        }
+        .book-glint-bar {
+            background: linear-gradient(
+                90deg,
+                transparent 0%,
+                rgba(255, 245, 180, 0.05) 30%,
+                rgba(255, 248, 205, 0.6) 50%,
+                rgba(212, 175, 55, 0.25) 65%,
+                transparent 100%
+            );
+            animation: bookShimmerSweep 5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            filter: blur(4px);
+        }
+
+        /* Dynamic Specular Sheen (Mouse/Touch Driven via CSS Vars) */
+        .book-interactive-sheen {
+            background: radial-gradient(
+                circle 380px at var(--sheen-x, 50%) var(--sheen-y, 35%),
+                rgba(255, 248, 205, 0.3) 0%,
+                rgba(212, 175, 55, 0.12) 40%,
+                transparent 75%
+            );
+            mix-blend-mode: color-dodge;
+        }
+
+        /* Sparkle twinkle animation */
+        @keyframes sparkleTwinkle {
+            0%, 100% { transform: scale(0.3) rotate(0deg); opacity: 0.2; }
+            50% { transform: scale(1.15) rotate(90deg); opacity: 1; filter: drop-shadow(0 0 8px #ffeaa7); }
+        }
+        .sparkle-twinkle {
+            animation: sparkleTwinkle 3s ease-in-out infinite;
+        }
+        .sparkle-twinkle-delay-1 { animation-delay: 0.8s; }
+        .sparkle-twinkle-delay-2 { animation-delay: 1.6s; }
+        .sparkle-twinkle-delay-3 { animation-delay: 2.4s; }
 
         /* Floating Animation */
         @keyframes float {
@@ -164,49 +316,60 @@
             border-radius: 10px; 
         }
 
-        /* 3D Carousel */
+        /* 3D Carousel Elegant & Responsive */
         .carousel-container {
             perspective: 1200px;
             transform-style: preserve-3d;
         }
         .carousel-item {
             position: absolute;
-            transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.65s cubic-bezier(0.25, 1, 0.5, 1);
             cursor: pointer;
-            border-radius: 1rem;
+            border-radius: 1.25rem;
             overflow: hidden;
-            border: 2px solid rgba(212, 175, 55, 0.4);
-            width: 65%;
+            height: 90%;
+            max-height: 420px;
             aspect-ratio: 3/4;
-            background: #112b1c;
+            background: #0d2316;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
+            user-select: none;
+            -webkit-user-select: none;
         }
         .item-active {
             transform: translateX(0) scale(1) translateZ(0);
             z-index: 30;
             opacity: 1;
-            box-shadow: 0 25px 50px rgba(212, 175, 55, 0.4);
-            border-color: rgba(212, 175, 55, 1);
+            box-shadow: 
+                0 25px 50px -10px rgba(0, 0, 0, 0.9),
+                0 0 35px rgba(212, 175, 55, 0.45),
+                inset 0 0 0 1px rgba(255, 245, 180, 0.4);
+            border: 2px solid #d4af37;
+            filter: brightness(1);
         }
         .item-prev {
-            transform: translateX(-55%) scale(0.85) translateZ(-100px) rotateY(15deg);
+            transform: translateX(-58%) scale(0.85) translateZ(-120px) rotateY(18deg);
             z-index: 20;
-            opacity: 0.7;
-            box-shadow: -10px 10px 20px rgba(0,0,0,0.5);
+            opacity: 0.65;
+            box-shadow: -10px 15px 30px rgba(0,0,0,0.7);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            filter: brightness(0.68) blur(0.3px);
         }
         .item-next {
-            transform: translateX(55%) scale(0.85) translateZ(-100px) rotateY(-15deg);
+            transform: translateX(58%) scale(0.85) translateZ(-120px) rotateY(-18deg);
             z-index: 20;
-            opacity: 0.7;
-            box-shadow: 10px 10px 20px rgba(0,0,0,0.5);
+            opacity: 0.65;
+            box-shadow: 10px 15px 30px rgba(0,0,0,0.7);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            filter: brightness(0.68) blur(0.3px);
         }
         .item-hidden-prev {
-            transform: translateX(-80%) scale(0.6) translateZ(-200px) rotateY(25deg);
+            transform: translateX(-100%) scale(0.65) translateZ(-250px) rotateY(30deg);
             z-index: 10;
             opacity: 0;
             pointer-events: none;
         }
         .item-hidden-next {
-            transform: translateX(80%) scale(0.6) translateZ(-200px) rotateY(-25deg);
+            transform: translateX(100%) scale(0.65) translateZ(-250px) rotateY(-30deg);
             z-index: 10;
             opacity: 0;
             pointer-events: none;
@@ -229,39 +392,192 @@
     <!-- Oscurecer el video para que el texto sea legible -->
     <div class="fixed inset-0 bg-black/60 z-[-1] pointer-events-none"></div>
 
-    <div id="book-container" class="fixed inset-0 flex items-center justify-center bg-forest-900/90 backdrop-blur-sm transition-opacity duration-1000">
-        <!-- The Book -->
-        <div id="book-cover" class="relative w-11/12 max-w-md h-[80vh] max-h-[700px] bg-forest-800 rounded-r-2xl shadow-book cursor-pointer border-r-4 border-y-4 border-gold-600/50 flex flex-col items-center justify-center p-4 sm:p-8 overflow-hidden group">
-            
-            <!-- Book Spine -->
-            <div class="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-black/60 to-transparent"></div>
-            
-            <!-- Ornate Book Details -->
-            <div class="absolute inset-4 border-2 border-gold-500/30 rounded-xl rounded-l-none pointer-events-none"></div>
-            <div class="absolute inset-6 border border-gold-400/20 rounded-lg rounded-l-none pointer-events-none"></div>
-            
-            <!-- Decorative Corners -->
-            <i class="fas fa-leaf absolute top-8 left-8 text-gold-500/40 text-xl rotate-[-45deg]"></i>
-            <i class="fas fa-leaf absolute top-8 right-8 text-gold-500/40 text-xl rotate-[45deg] scale-x-[-1]"></i>
-            <i class="fas fa-leaf absolute bottom-8 left-8 text-gold-500/40 text-xl rotate-[-135deg]"></i>
-            <i class="fas fa-leaf absolute bottom-8 right-8 text-gold-500/40 text-xl rotate-[135deg] scale-x-[-1]"></i>
+    <div id="book-container" class="fixed inset-0 flex items-center justify-center bg-forest-900/90 backdrop-blur-sm transition-opacity duration-1000 z-50">
+        
+        <!-- SVG Definitions for Metallic Gold Gradients (reused by ornaments) -->
+        <svg class="absolute w-0 h-0 overflow-hidden" aria-hidden="true" focusable="false">
+            <defs>
+                <linearGradient id="goldFoilGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#fff8cc" />
+                    <stop offset="20%" stop-color="#e5c158" />
+                    <stop offset="45%" stop-color="#b38728" />
+                    <stop offset="65%" stop-color="#fdf6b5" />
+                    <stop offset="85%" stop-color="#d4af37" />
+                    <stop offset="100%" stop-color="#7a5a12" />
+                </linearGradient>
+                <linearGradient id="goldFoilLight" x1="0%" y1="100%" x2="100%" y2="0%">
+                    <stop offset="0%" stop-color="#aa8c2c" />
+                    <stop offset="50%" stop-color="#fffbe0" />
+                    <stop offset="100%" stop-color="#d4af37" />
+                </linearGradient>
+            </defs>
+        </svg>
 
-            <!-- Content -->
-            <div class="z-10 text-center flex flex-col items-center w-full px-2">
-                <span class="text-gold-400 tracking-widest text-xs sm:text-sm uppercase mb-4 opacity-80 font-semibold">Te invito a mis</span>
-                <h1 class="font-cursive text-5xl sm:text-7xl md:text-8xl gold-foil mb-2 drop-shadow-lg transform group-hover:scale-105 transition-transform duration-500 w-full truncate px-2">Saira</h1>
-                <h2 class="text-xl sm:text-3xl text-gold-400 font-bold tracking-[0.1em] sm:tracking-[0.2em] mb-8 sm:mb-12">XV AÑOS</h2>
-                
-                <div class="relative mt-4 sm:mt-8">
-                    <div class="absolute -inset-4 rounded-full bg-gold-500/20 blur-md animate-pulse"></div>
-                    <button class="relative px-6 sm:px-8 py-2 sm:py-3 bg-transparent border-2 border-gold-500 text-gold-400 uppercase tracking-widest text-xs sm:text-sm font-bold rounded-full hover:bg-gold-500 hover:text-forest-900 transition-all duration-300 shadow-[0_0_15px_rgba(212,175,55,0.3)] hover:scale-110">
-                        Abrir aquí <i class="fas fa-key ml-2"></i>
-                    </button>
+        <!-- Golden Fairy Dust / Ambient Glow behind the Book -->
+        <div class="absolute w-[92%] max-w-lg h-[82vh] max-h-[730px] rounded-full bg-gold-500/15 blur-3xl pointer-events-none animate-pulse"></div>
+
+        <!-- 3D Perspective Wrapper for Realistic Book Depth & Mouse Tilt -->
+        <div id="book-perspective-wrapper" class="relative w-11/12 max-w-md h-[80vh] max-h-[700px] select-none">
+            
+            <!-- Gilded Stacked Pages (Physical Book Volume on Right & Bottom) -->
+            <div class="book-pages-side absolute -right-3.5 sm:-right-4.5 top-2.5 bottom-3.5 w-4 sm:w-5 pointer-events-none z-0"></div>
+            <div class="book-pages-bottom absolute left-7 sm:left-9 -bottom-3 sm:-bottom-4 right-1 h-3.5 sm:h-4.5 pointer-events-none z-0"></div>
+
+            <!-- Satin Gold Bookmark Ribbon -->
+            <div class="book-ribbon absolute left-1/3 -bottom-11 sm:-bottom-12 z-0 pointer-events-none"></div>
+
+            <!-- Inside Parchment Page (Glimpsed magically when the cover opens) -->
+            <div class="absolute inset-0 rounded-r-2xl book-inside-page border-r-2 border-y-2 border-gold-600/40 flex flex-col items-center justify-center p-6 text-center z-0 overflow-hidden">
+                <div class="w-full h-full border border-gold-600/30 rounded-r-xl p-6 flex flex-col items-center justify-center relative bg-white/20">
+                    <i class="fas fa-feather-pointed text-gold-700/30 text-7xl sm:text-8xl absolute"></i>
+                    <p class="font-cursive text-4xl sm:text-5xl text-[#3e2723] z-10 mb-2">Bienvenidos a mi historia</p>
+                    <span class="text-xs uppercase tracking-[0.3em] text-[#8b5a2b] font-serif font-bold">Capítulo XV</span>
                 </div>
-            </div>  
+            </div>
 
-            <!-- Subtle magical dust on cover -->
-            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20 mix-blend-screen pointer-events-none"></div>
+            <!-- The Antique & Shiny Book Front Cover -->
+            <div id="book-cover" class="relative w-full h-full antique-leather rounded-r-2xl cursor-pointer border-r-[3px] border-y-[3px] border-gold-400/70 flex flex-col items-center justify-center p-5 sm:p-8 overflow-hidden group z-10">
+                
+                <!-- Curved 3D Spine Lighting & Texture (Left Edge) -->
+                <div class="absolute left-0 top-0 bottom-0 w-9 sm:w-11 book-spine-lighting pointer-events-none z-20"></div>
+                
+                <!-- Spine Hinge Crease (Artisan Tooling Groove) -->
+                <div class="absolute top-0 bottom-0 book-hinge-crease pointer-events-none z-20"></div>
+
+                <!-- Raised Bookbinding Ribs on Spine (Nervios cosidos en oro) -->
+                <div class="absolute left-0 top-[16%] w-7 h-2 bg-gradient-to-r from-[#8a681d] via-[#f7e6a1] to-[#73510e] rounded-r-sm shadow-[0_2px_4px_rgba(0,0,0,0.85)] border-y border-gold-300/50 pointer-events-none z-30"></div>
+                <div class="absolute left-0 top-[38%] w-7 h-2 bg-gradient-to-r from-[#8a681d] via-[#f7e6a1] to-[#73510e] rounded-r-sm shadow-[0_2px_4px_rgba(0,0,0,0.85)] border-y border-gold-300/50 pointer-events-none z-30"></div>
+                <div class="absolute left-0 top-[62%] w-7 h-2 bg-gradient-to-r from-[#8a681d] via-[#f7e6a1] to-[#73510e] rounded-r-sm shadow-[0_2px_4px_rgba(0,0,0,0.85)] border-y border-gold-300/50 pointer-events-none z-30"></div>
+                <div class="absolute left-0 top-[84%] w-7 h-2 bg-gradient-to-r from-[#8a681d] via-[#f7e6a1] to-[#73510e] rounded-r-sm shadow-[0_2px_4px_rgba(0,0,0,0.85)] border-y border-gold-300/50 pointer-events-none z-30"></div>
+
+                <!-- Blind Debossed Artisan Groove (Outer Leather Pressing) -->
+                <div class="absolute inset-3 sm:inset-4 rounded-xl rounded-l-none border border-black/70 shadow-[inset_0_2px_5px_rgba(0,0,0,0.9),0_1px_1px_rgba(255,245,180,0.2)] pointer-events-none z-10"></div>
+                
+                <!-- Embossed Gold Foil Border Frame (Inner Gilded Border) -->
+                <div class="absolute inset-5 sm:inset-6 border-2 border-gold-400/50 rounded-lg rounded-l-none shadow-[0_0_12px_rgba(212,175,55,0.3),inset_0_0_8px_rgba(212,175,55,0.2)] pointer-events-none z-10"></div>
+                <div class="absolute inset-7 sm:inset-8 border border-dashed border-gold-300/30 rounded rounded-l-none pointer-events-none z-10"></div>
+
+                <!-- 4 Ornate Victorian / Baroque Antique Brass Corners (Herrajes de latón repujado) -->
+                <!-- Top-Left Corner -->
+                <svg class="absolute top-2 left-6 sm:top-3 sm:left-7 w-14 h-14 sm:w-20 sm:h-20 pointer-events-none filter drop-shadow-[0_3px_5px_rgba(0,0,0,0.9)] z-20" viewBox="0 0 100 100" fill="none">
+                    <path d="M 6 6 L 68 6 C 58 12 48 18 40 28 C 30 38 24 50 18 64 C 12 52 8 36 6 6 Z" fill="url(#goldFoilGrad)" opacity="0.95" />
+                    <path d="M 10 10 L 80 10 C 65 18 52 28 42 42 C 28 54 18 68 10 84 Z" stroke="url(#goldFoilLight)" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.85" />
+                    <path d="M 16 16 C 30 18 42 26 48 38 C 42 34 32 30 22 30 C 20 40 22 50 28 58 C 22 50 18 36 16 16 Z" fill="url(#goldFoilLight)" />
+                    <circle cx="20" cy="20" r="5" fill="url(#goldFoilGrad)" stroke="#4a3608" stroke-width="1.5" />
+                    <circle cx="18.5" cy="18.5" r="1.8" fill="#ffffff" opacity="0.8" />
+                    <circle cx="66" cy="8" r="2.5" fill="url(#goldFoilLight)" />
+                    <circle cx="8" cy="66" r="2.5" fill="url(#goldFoilLight)" />
+                </svg>
+
+                <!-- Top-Right Corner -->
+                <svg class="absolute top-2 right-2 sm:top-3 sm:right-3 w-14 h-14 sm:w-20 sm:h-20 pointer-events-none filter drop-shadow-[0_3px_5px_rgba(0,0,0,0.9)] z-20 rotate-90" viewBox="0 0 100 100" fill="none">
+                    <path d="M 6 6 L 68 6 C 58 12 48 18 40 28 C 30 38 24 50 18 64 C 12 52 8 36 6 6 Z" fill="url(#goldFoilGrad)" opacity="0.95" />
+                    <path d="M 10 10 L 80 10 C 65 18 52 28 42 42 C 28 54 18 68 10 84 Z" stroke="url(#goldFoilLight)" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.85" />
+                    <path d="M 16 16 C 30 18 42 26 48 38 C 42 34 32 30 22 30 C 20 40 22 50 28 58 C 22 50 18 36 16 16 Z" fill="url(#goldFoilLight)" />
+                    <circle cx="20" cy="20" r="5" fill="url(#goldFoilGrad)" stroke="#4a3608" stroke-width="1.5" />
+                    <circle cx="18.5" cy="18.5" r="1.8" fill="#ffffff" opacity="0.8" />
+                    <circle cx="66" cy="8" r="2.5" fill="url(#goldFoilLight)" />
+                    <circle cx="8" cy="66" r="2.5" fill="url(#goldFoilLight)" />
+                </svg>
+
+                <!-- Bottom-Left Corner -->
+                <svg class="absolute bottom-2 left-6 sm:bottom-3 sm:left-7 w-14 h-14 sm:w-20 sm:h-20 pointer-events-none filter drop-shadow-[0_3px_5px_rgba(0,0,0,0.9)] z-20 -rotate-90" viewBox="0 0 100 100" fill="none">
+                    <path d="M 6 6 L 68 6 C 58 12 48 18 40 28 C 30 38 24 50 18 64 C 12 52 8 36 6 6 Z" fill="url(#goldFoilGrad)" opacity="0.95" />
+                    <path d="M 10 10 L 80 10 C 65 18 52 28 42 42 C 28 54 18 68 10 84 Z" stroke="url(#goldFoilLight)" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.85" />
+                    <path d="M 16 16 C 30 18 42 26 48 38 C 42 34 32 30 22 30 C 20 40 22 50 28 58 C 22 50 18 36 16 16 Z" fill="url(#goldFoilLight)" />
+                    <circle cx="20" cy="20" r="5" fill="url(#goldFoilGrad)" stroke="#4a3608" stroke-width="1.5" />
+                    <circle cx="18.5" cy="18.5" r="1.8" fill="#ffffff" opacity="0.8" />
+                    <circle cx="66" cy="8" r="2.5" fill="url(#goldFoilLight)" />
+                    <circle cx="8" cy="66" r="2.5" fill="url(#goldFoilLight)" />
+                </svg>
+
+                <!-- Bottom-Right Corner -->
+                <svg class="absolute bottom-2 right-2 sm:bottom-3 sm:right-3 w-14 h-14 sm:w-20 sm:h-20 pointer-events-none filter drop-shadow-[0_3px_5px_rgba(0,0,0,0.9)] z-20 rotate-180" viewBox="0 0 100 100" fill="none">
+                    <path d="M 6 6 L 68 6 C 58 12 48 18 40 28 C 30 38 24 50 18 64 C 12 52 8 36 6 6 Z" fill="url(#goldFoilGrad)" opacity="0.95" />
+                    <path d="M 10 10 L 80 10 C 65 18 52 28 42 42 C 28 54 18 68 10 84 Z" stroke="url(#goldFoilLight)" stroke-width="2" stroke-linecap="round" fill="none" opacity="0.85" />
+                    <path d="M 16 16 C 30 18 42 26 48 38 C 42 34 32 30 22 30 C 20 40 22 50 28 58 C 22 50 18 36 16 16 Z" fill="url(#goldFoilLight)" />
+                    <circle cx="20" cy="20" r="5" fill="url(#goldFoilGrad)" stroke="#4a3608" stroke-width="1.5" />
+                    <circle cx="18.5" cy="18.5" r="1.8" fill="#ffffff" opacity="0.8" />
+                    <circle cx="66" cy="8" r="2.5" fill="url(#goldFoilLight)" />
+                    <circle cx="8" cy="66" r="2.5" fill="url(#goldFoilLight)" />
+                </svg>
+
+                <!-- Floating Twinkling Sparkles (Destellos mágicos brillantes) -->
+                <i class="fas fa-sparkles sparkle-twinkle absolute top-12 left-12 text-gold-300 text-sm pointer-events-none z-20"></i>
+                <i class="fas fa-sparkles sparkle-twinkle sparkle-twinkle-delay-1 absolute top-20 right-10 text-gold-200 text-xs pointer-events-none z-20"></i>
+                <i class="fas fa-sparkles sparkle-twinkle sparkle-twinkle-delay-2 absolute bottom-24 left-14 text-gold-300 text-xs pointer-events-none z-20"></i>
+                <i class="fas fa-sparkles sparkle-twinkle sparkle-twinkle-delay-3 absolute bottom-14 right-12 text-gold-200 text-sm pointer-events-none z-20"></i>
+
+                <!-- Book Cover Main Content -->
+                <div class="z-20 text-center flex flex-col items-center w-full px-4 sm:px-6 pl-8 sm:pl-10">
+                    
+                    <!-- Antique Botanical Crest / Crown Flourish -->
+                    <div class="flex justify-center mb-1 text-gold-400 filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                        <svg class="w-16 h-7 sm:w-20 sm:h-8" viewBox="0 0 100 36" fill="none">
+                            <path d="M50 4 C40 14, 24 16, 6 26 C22 24, 36 20, 44 13 Z" fill="url(#goldFoilGrad)" />
+                            <path d="M50 4 C60 14, 76 16, 94 26 C78 24, 64 20, 56 13 Z" fill="url(#goldFoilGrad)" />
+                            <circle cx="50" cy="5" r="2.5" fill="#fff9d2" />
+                            <circle cx="36" cy="12" r="1.5" fill="#fdf6b5" />
+                            <circle cx="64" cy="12" r="1.5" fill="#fdf6b5" />
+                        </svg>
+                    </div>
+
+                    <!-- Subtitle -->
+                    <span class="text-gold-300 tracking-[0.25em] text-xs sm:text-sm uppercase mb-2 font-serif font-bold drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] opacity-90">
+                        Te invito a mis
+                    </span>
+
+                    <!-- Main Name: Saira (Brilliant High-Luster Gold Foil) -->
+                    <div class="relative w-full py-1">
+                        <div class="absolute inset-0 bg-gold-400/20 blur-xl rounded-full pointer-events-none"></div>
+                        <h1 class="relative font-cursive text-6xl sm:text-7xl md:text-8xl gold-foil mb-1 drop-shadow-[0_4px_8px_rgba(0,0,0,0.9)] transform group-hover:scale-105 transition-transform duration-500 w-full px-2">
+                            Saira
+                        </h1>
+                    </div>
+
+                    <!-- Antique Filigree Divider (Baroque flourish with center gem) -->
+                    <div class="flex items-center justify-center w-full max-w-[240px] sm:max-w-[280px] my-1 text-gold-400 filter drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                        <svg class="w-full h-6" viewBox="0 0 260 20" fill="none">
+                            <path d="M10 10 C35 10, 50 3, 75 10 C95 15, 110 12, 120 10" stroke="url(#goldFoilGrad)" stroke-width="1.5" stroke-linecap="round"/>
+                            <path d="M250 10 C225 10, 210 3, 185 10 C165 15, 150 12, 140 10" stroke="url(#goldFoilGrad)" stroke-width="1.5" stroke-linecap="round"/>
+                            <!-- Center Gem / Starburst -->
+                            <polygon points="130,2 133,8 139,10 133,12 130,18 127,12 121,10 127,8" fill="url(#goldFoilLight)" />
+                            <circle cx="130" cy="10" r="1.5" fill="#ffffff" />
+                            <circle cx="85" cy="10" r="1.5" fill="#fcf6ba" />
+                            <circle cx="175" cy="10" r="1.5" fill="#fcf6ba" />
+                        </svg>
+                    </div>
+
+                    <!-- Event: XV AÑOS -->
+                    <h2 class="text-xl sm:text-3xl text-gold-300 font-serif font-bold tracking-[0.25em] sm:tracking-[0.3em] mb-6 sm:mb-8 drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">
+                        XV AÑOS
+                    </h2>
+                    
+                    <!-- Royal Seal / Antique Clasp Button "Abrir aquí" -->
+                    <div class="relative mt-2 sm:mt-4 group/btn">
+                        <!-- Pulsing golden aura -->
+                        <div class="absolute -inset-3 rounded-full bg-gold-400/25 blur-lg animate-pulse pointer-events-none group-hover/btn:bg-gold-400/40 transition-all"></div>
+                        
+                        <button class="relative px-7 sm:px-9 py-2.5 sm:py-3.5 rounded-full overflow-hidden flex items-center gap-3 border-2 border-gold-400/80 bg-gradient-to-b from-[#1b4329] via-[#0f2e1c] to-[#07160d] text-gold-200 uppercase tracking-[0.2em] text-xs sm:text-sm font-bold shadow-[0_4px_20px_rgba(0,0,0,0.85),inset_0_1px_2px_rgba(255,245,180,0.4),0_0_20px_rgba(212,175,55,0.35)] hover:shadow-[0_6px_25px_rgba(212,175,55,0.65),inset_0_1px_4px_rgba(255,255,255,0.6)] hover:border-gold-300 hover:text-white hover:scale-105 active:scale-95 transition-all duration-300">
+                            <!-- Inner decorative border ring -->
+                            <span class="absolute inset-[3px] rounded-full border border-gold-500/30 pointer-events-none"></span>
+                            <!-- Shimmer beam across button -->
+                            <span class="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover/btn:translate-x-full transition-transform duration-700 pointer-events-none"></span>
+                            <span class="relative z-10 font-serif font-semibold drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]">Abrir aquí</span>
+                            <i class="fas fa-key text-gold-300 text-sm group-hover/btn:rotate-45 group-hover/btn:text-gold-200 transition-transform duration-300 drop-shadow-[0_0_6px_rgba(212,175,55,0.8)]"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Continuous Golden Light Sweep across the book cover -->
+                <div class="book-glint-bar absolute -inset-full pointer-events-none z-30"></div>
+
+                <!-- Dynamic Specular Sheen (Reacts naturally to mouse/touch cursor) -->
+                <div class="book-interactive-sheen absolute inset-0 pointer-events-none z-30"></div>
+
+                <!-- Subtle magical dust texture on leather -->
+                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-15 mix-blend-screen pointer-events-none z-10"></div>
+            </div>
         </div>
     </div>
 
@@ -271,7 +587,7 @@
         <section class="w-full max-w-lg mx-auto pt-16 px-6 flex flex-col items-center">
             <div class="relative w-full aspect-[3/4] rounded-t-full p-2 border-4 border-gold-500/40 shadow-2xl overflow-hidden mt-8 fade-in-up animate-float">
                 <!-- Arch placeholder -->
-                <img src="https://placehold.co/600x800/1a3622/d4af37?text=Foto+Quinceañera\n(Fondo+Bosque)" alt="Quinceañera" class="w-full h-full object-cover rounded-t-full mask-arch">
+                <img src="./fotos/inicio.jpg" alt="Quinceañera" class="w-full h-full object-cover rounded-t-full mask-arch">
                 
                 <!-- Floating decorative elements -->
                 <i class="fas fa-butterfly absolute top-10 right-4 text-gold-400 text-2xl animate-bounce drop-shadow-[0_0_10px_rgba(212,175,55,0.8)]" style="animation-duration: 3s;"></i>
@@ -287,8 +603,8 @@
                 <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 translate-y-1/2 w-3/4 h-4 bg-gradient-to-t from-[#8b5a2b] to-[#c19a6b] rounded-full shadow-md"></div>
                 
                 <p class="text-sm italic mb-6 text-[#5c4033]">Con la bendición de Dios y el amor de mis padres,</p>
-                <h3 class="font-cursive text-3xl mb-2 text-[#3e2723]">Nombre de la madre</h3>
-                <h3 class="font-cursive text-3xl mb-6 text-[#3e2723]">& Nombre del padre</h3>
+                <h3 class="font-cursive text-3xl mb-2 text-[#3e2723]">Andrea Alvarado</h3>
+                <h3 class="font-cursive text-3xl mb-6 text-[#3e2723]">& Johnny Pineda</h3>
                 <p class="text-sm leading-relaxed text-[#4e342e]">
                     Quiero invitarlos a compartir conmigo la alegría de mis
                 </p>
@@ -323,98 +639,220 @@
             </div>
         </section>
 
-        <section class="w-full max-w-md mx-auto mt-24 fade-in-up" id="galeria">
-            <h3 class="font-cursive text-5xl text-center gold-foil mb-4">Memorias</h3>
-            <p class="text-center text-sm text-gray-300 italic mb-8 px-4">Toca una imagen para explorarla</p>
-            
-            <div class="relative w-full h-[400px] carousel-container flex justify-center items-center mb-8">
-                <!-- Image 1 -->
-                <div class="carousel-item item-active" data-index="0">
-                    <img src="https://placehold.co/600x800/1a3622/d4af37?text=Foto+1" alt="Gallery 1" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
-                        <i class="fas fa-search-plus text-gold-400 text-3xl drop-shadow-md animate-pulse"></i>
-                    </div>
-                </div>
-                <!-- Image 2 -->
-                <div class="carousel-item item-next" data-index="1">
-                    <img src="https://placehold.co/600x800/2a4a34/d4af37?text=Foto+2" alt="Gallery 2" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
-                        <i class="fas fa-search-plus text-gold-400 text-3xl drop-shadow-md animate-pulse"></i>
-                    </div>
-                </div>
-                <!-- Image 3 -->
-                <div class="carousel-item item-hidden-next" data-index="2">
-                    <img src="https://placehold.co/600x800/112b1c/d4af37?text=Foto+3" alt="Gallery 3" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
-                        <i class="fas fa-search-plus text-gold-400 text-3xl drop-shadow-md animate-pulse"></i>
-                    </div>
-                </div>
-                <!-- Image 4 -->
-                <div class="carousel-item item-hidden-prev" data-index="3">
-                    <img src="https://placehold.co/600x800/0a1c12/d4af37?text=Foto+4" alt="Gallery 4" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
-                        <i class="fas fa-search-plus text-gold-400 text-3xl drop-shadow-md animate-pulse"></i>
-                    </div>
-                </div>
-                <!-- Image 5 -->
-                <div class="carousel-item item-prev" data-index="4">
-                    <img src="https://placehold.co/600x800/1a3622/d4af37?text=Foto+5" alt="Gallery 5" class="w-full h-full object-cover">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-6">
-                        <i class="fas fa-search-plus text-gold-400 text-3xl drop-shadow-md animate-pulse"></i>
-                    </div>
-                </div>
+        <!-- SECCIÓN: MEMORIAS (CARRUSEL EN ORDEN CRONOLÓGICO: DESDE BEBÉ HASTA SUS 15 AÑOS) -->
+        <section class="w-full max-w-4xl mx-auto mt-20 px-3 sm:px-6 fade-in-up" id="galeria">
+            <div class="text-center mb-6">
+                <p class="text-gold-400 font-serif text-xs uppercase tracking-[0.25em] mb-1">Galería de Recuerdos</p>
+                <h3 class="font-cursive text-5xl sm:text-6xl gold-foil mb-2">Memorias</h3>
+                <p class="text-center text-xs sm:text-sm text-gold-300/90 italic max-w-md mx-auto">
+                    El viaje de mis quince años: desde mis primeros pasos hasta este día mágico.
+                </p>
+                <p class="text-[11px] text-gray-400 italic mt-1 flex items-center justify-center gap-1">
+                    <i class="fas fa-search-plus text-gold-400"></i> Toca una imagen para verla en pantalla completa
+                </p>
             </div>
-            
-            <!-- Carousel Controls -->
-            <div class="flex justify-center items-center gap-6 mt-2">
-                <button id="btn-prev" class="w-10 h-10 rounded-full border-2 border-gold-500/30 flex items-center justify-center text-gold-400 hover:bg-gold-500 hover:text-forest-900 transition-all hover:scale-110">
-                    <i class="fas fa-chevron-left"></i>
+
+            <!-- CARRUSEL CONTENEDOR 3D Y BOTONES DE NAVEGACIÓN -->
+            <div class="relative w-full max-w-2xl mx-auto mb-6">
+                <!-- Resplandor mágico dorado de fondo -->
+                <div class="absolute -inset-4 bg-gold-500/10 rounded-3xl blur-2xl pointer-events-none"></div>
+
+                <!-- Contenedor dinámico 3D -->
+                <div id="carousel" class="relative w-full h-[370px] xs:h-[400px] sm:h-[440px] md:h-[480px] flex justify-center items-center overflow-hidden carousel-container select-none"></div>
+
+                <!-- Botones de navegación de orfebrería -->
+                <button type="button" onclick="prevSlide()" class="absolute -left-1 sm:left-2 top-1/2 -translate-y-1/2 z-40 w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-gold-400/80 bg-forest-900/90 backdrop-blur-md text-gold-300 flex items-center justify-center hover:bg-gold-500 hover:text-forest-950 hover:scale-110 active:scale-95 transition-all shadow-[0_4px_15px_rgba(0,0,0,0.7),0_0_15px_rgba(212,175,55,0.4)] focus:outline-none" title="Anterior">
+                    <i class="fas fa-chevron-left text-sm sm:text-base"></i>
                 </button>
-                <div id="carousel-dots" class="flex gap-2">
-                    <div class="dot w-2 h-2 rounded-full bg-gold-500 cursor-pointer transition-all hover:scale-125" data-index="0"></div>
-                    <div class="dot w-2 h-2 rounded-full bg-gold-500/30 cursor-pointer transition-all hover:bg-gold-500/60 hover:scale-125" data-index="1"></div>
-                    <div class="dot w-2 h-2 rounded-full bg-gold-500/30 cursor-pointer transition-all hover:bg-gold-500/60 hover:scale-125" data-index="2"></div>
-                    <div class="dot w-2 h-2 rounded-full bg-gold-500/30 cursor-pointer transition-all hover:bg-gold-500/60 hover:scale-125" data-index="3"></div>
-                    <div class="dot w-2 h-2 rounded-full bg-gold-500/30 cursor-pointer transition-all hover:bg-gold-500/60 hover:scale-125" data-index="4"></div>
-                </div>
-                <button id="btn-next" class="w-10 h-10 rounded-full border-2 border-gold-500/30 flex items-center justify-center text-gold-400 hover:bg-gold-500 hover:text-forest-900 transition-all hover:scale-110">
-                    <i class="fas fa-chevron-right"></i>
+                <button type="button" onclick="nextSlide()" class="absolute -right-1 sm:right-2 top-1/2 -translate-y-1/2 z-40 w-11 h-11 sm:w-12 sm:h-12 rounded-full border-2 border-gold-400/80 bg-forest-900/90 backdrop-blur-md text-gold-300 flex items-center justify-center hover:bg-gold-500 hover:text-forest-950 hover:scale-110 active:scale-95 transition-all shadow-[0_4px_15px_rgba(0,0,0,0.7),0_0_15px_rgba(212,175,55,0.4)] focus:outline-none" title="Siguiente">
+                    <i class="fas fa-chevron-right text-sm sm:text-base"></i>
                 </button>
             </div>
+
+            <!-- Indicador de etapa actual y puntos interactivos -->
+            <div class="flex flex-col items-center justify-center mb-6 px-4">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-forest-900/90 border border-gold-400/70 shadow-[0_4px_15px_rgba(0,0,0,0.6),0_0_15px_rgba(212,175,55,0.3)] backdrop-blur-md">
+                    <i id="carousel-badge-icon" class="fas fa-crown text-gold-400 text-xs"></i>
+                    <span id="carousel-badge" class="font-serif text-xs sm:text-sm text-gold-200 font-bold tracking-wide">
+                        1. Bebé · Primeros Meses (1 de 14)
+                    </span>
+                </div>
+                <!-- 14 Puntos interactivos / Dots -->
+                <div id="carousel-dots" class="flex flex-wrap justify-center items-center gap-1.5 max-w-xs mx-auto mt-3"></div>
+            </div>
+
+            <!-- LÓGICA JAVASCRIPT DEL CARRUSEL (ORDEN CRONOLÓGICO FÁCIL DE MODIFICAR) -->
+            <script>
+                // AQUÍ TIENES LAS FOTOS EN ORDEN CRONOLÓGICO: DESDE BEBÉ HASTA SUS 15 AÑOS
+                const fotosCronologicas = [
+                    { src: "./fotos/img1.jpg",  etapa: "Bebé · Primeros Meses",       icon: "fa-baby" },
+                    { src: "./fotos/img2.jpg",  etapa: "Bebé · 1 Añito",               icon: "fa-heart" },
+                    { src: "./fotos/img3.jpg",  etapa: "Primeros Pasos · 2 Años",      icon: "fa-shapes" },
+                    { src: "./fotos/img4.jpg",  etapa: "Primeros Pasos · 3 Años",      icon: "fa-puzzle-piece" },
+                    { src: "./fotos/img5.jpg",  etapa: "Niñez · 4 - 5 Años",           icon: "fa-palette" },
+                    { src: "./fotos/img6.jpg",  etapa: "Niñez · 6 - 7 Años",           icon: "fa-bicycle" },
+                    { src: "./fotos/img7.jpg",  etapa: "Niñez · 8 - 9 Años",           icon: "fa-book-open" },
+                    { src: "./fotos/img8.jpg",  etapa: "Creciendo · 10 - 11 Años",     icon: "fa-camera" },
+                    { src: "./fotos/img9.jpg",  etapa: "Creciendo · 12 Años",          icon: "fa-feather" },
+                    { src: "./fotos/img10.jpg", etapa: "Adolescencia · 13 Años",       icon: "fa-star" },
+                    { src: "./fotos/img11.jpg", etapa: "Adolescencia · 14 Años",       icon: "fa-gem" },
+                    { src: "./fotos/img12.jpg", etapa: "Rumbo a Mis XV · 14 Años",     icon: "fa-wand-magic-sparkles" },
+                    { src: "./fotos/img13.jpg", etapa: "Mis 15 Años",                  icon: "fa-butterfly" },
+                    { src: "./fotos/img14.jpg", etapa: "Mis 15 Años",                  icon: "fa-crown" }
+                ];
+
+                const TOTAL = fotosCronologicas.length;
+                let active = 0;
+
+                function renderCarousel() {
+                    const carousel = document.getElementById('carousel');
+                    if (!carousel) return;
+                    let html = '';
+
+                    for (let i = 0; i < TOTAL; i++) {
+                        const diff = (i - active + TOTAL) % TOTAL;
+                        const foto = fotosCronologicas[i];
+
+                        let itemClass = 'hidden';
+                        if (diff === 0) itemClass = 'item-active';
+                        else if (diff === 1) itemClass = 'item-next';
+                        else if (diff === 2) itemClass = 'item-hidden-next';
+                        else if (diff === TOTAL - 1) itemClass = 'item-prev';
+                        else if (diff === TOTAL - 2) itemClass = 'item-hidden-prev';
+
+                        html += `
+                            <div class="carousel-item ${itemClass}" data-index="${i}" onclick="clickSlide(${i})">
+                                <img src="${foto.src}" alt="${foto.etapa}" class="w-full h-full object-cover select-none">
+                                
+                                <!-- Insignia de Etapa de Lujo -->
+                                <div class="absolute top-3 left-3 px-3 py-1 rounded-full bg-forest-950/85 backdrop-blur-md border border-gold-400/70 text-gold-200 text-[11px] sm:text-xs font-serif font-bold shadow-[0_4px_12px_rgba(0,0,0,0.7)] flex items-center gap-1.5 z-10 pointer-events-none">
+                                    <i class="fas ${foto.icon} text-gold-400 text-[10px]"></i>
+                                    <span>${i + 1}. ${foto.etapa}</span>
+                                </div>
+
+                                <!-- Overlay Inferior con Icono de Zoom -->
+                                <div class="absolute inset-0 bg-gradient-to-t from-forest-950/95 via-transparent to-black/20 opacity-0 hover:opacity-100 transition-opacity duration-300 flex items-end justify-between p-4">
+                                    <span class="text-xs font-serif italic text-gold-200 truncate pr-2">${foto.etapa}</span>
+                                    <span class="w-8 h-8 rounded-full bg-gold-500/20 border border-gold-400 flex items-center justify-center text-xs text-gold-200 shadow-gold shrink-0">
+                                        <i class="fas fa-search-plus"></i>
+                                    </span>
+                                </div>
+                            </div>`;
+                    }
+
+                    carousel.innerHTML = html;
+
+                    // Actualizar Badge y Dots
+                    const badge = document.getElementById('carousel-badge');
+                    const badgeIcon = document.getElementById('carousel-badge-icon');
+                    if (badge && fotosCronologicas[active]) {
+                        badge.textContent = `${active + 1}. ${fotosCronologicas[active].etapa} (${active + 1} de ${TOTAL})`;
+                        if (badgeIcon) badgeIcon.className = `fas ${fotosCronologicas[active].icon} text-gold-400 text-xs`;
+                    }
+
+                    const dotsContainer = document.getElementById('carousel-dots');
+                    if (dotsContainer) {
+                        let dotsHtml = '';
+                        for (let d = 0; d < TOTAL; d++) {
+                            if (d === active) {
+                                dotsHtml += `<button type="button" onclick="goToSlide(${d})" class="w-6 sm:w-8 h-2 rounded-full bg-gradient-to-r from-gold-400 to-gold-200 shadow-gold transition-all" title="Foto ${d + 1}"></button>`;
+                            } else {
+                                dotsHtml += `<button type="button" onclick="goToSlide(${d})" class="w-2 h-2 rounded-full bg-gold-500/30 hover:bg-gold-500/70 transition-all" title="Foto ${d + 1}"></button>`;
+                            }
+                        }
+                        dotsContainer.innerHTML = dotsHtml;
+                    }
+                }
+
+                function nextSlide() {
+                    active = (active + 1) % TOTAL;
+                    renderCarousel();
+                }
+
+                function prevSlide() {
+                    active = (active - 1 + TOTAL) % TOTAL;
+                    renderCarousel();
+                }
+
+                function goToSlide(index) {
+                    if (index >= 0 && index < TOTAL) {
+                        active = index;
+                        renderCarousel();
+                    }
+                }
+
+                function clickSlide(index) {
+                    const diff = (index - active + TOTAL) % TOTAL;
+                    if (diff === 0) {
+                        if (typeof openLightbox === 'function') {
+                            openLightbox(fotosCronologicas[index].src);
+                        }
+                    } else if (diff === 1 || diff === 2) {
+                        nextSlide();
+                    } else {
+                        prevSlide();
+                    }
+                }
+
+                // Soporte para gestos táctiles (Swipe) en móvil
+                const carouselBox = document.getElementById('carousel');
+                if (carouselBox) {
+                    let touchStartX = 0;
+                    carouselBox.addEventListener('touchstart', (e) => {
+                        touchStartX = e.changedTouches[0].screenX;
+                    }, { passive: true });
+                    carouselBox.addEventListener('touchend', (e) => {
+                        const touchEndX = e.changedTouches[0].screenX;
+                        const diffX = touchEndX - touchStartX;
+                        if (diffX > 45) prevSlide();
+                        else if (diffX < -45) nextSlide();
+                    }, { passive: true });
+                }
+
+                // Soporte para flechas del teclado
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'ArrowRight') nextSlide();
+                    if (e.key === 'ArrowLeft') prevSlide();
+                });
+
+                // Carga inicial
+                if (document.readyState === 'loading') {
+                    document.addEventListener('DOMContentLoaded', renderCarousel);
+                } else {
+                    renderCarousel();
+                }
+            </script>
         </section>
 
-        <section class="w-full max-w-md mx-auto mt-24 px-6 text-center fade-in-up">
-            <div class="bg-forest-800/60 backdrop-blur-md p-8 rounded-t-full border border-gold-500/30 shadow-lg relative overflow-hidden">
+        <!-- SECCIÓN: HORA Y LUGAR (100% RESPONSIVE) -->
+        <section class="w-full max-w-sm sm:max-w-md mx-auto mt-20 px-4 sm:px-6 text-center fade-in-up">
+            <div class="bg-forest-800/60 backdrop-blur-md p-6 sm:p-8 rounded-t-full border border-gold-500/30 shadow-lg relative overflow-hidden">
                 <!-- Arch border -->
                 <div class="absolute inset-2 border-2 border-gold-500/20 rounded-t-full pointer-events-none"></div>
                 
                 <i class="fas fa-map-marker-alt text-4xl text-gold-400 mb-4 mt-8 drop-shadow-lg"></i>
                 <h3 class="font-cursive text-4xl gold-foil mb-2">Hora y Lugar</h3>
-                <p class="text-xl font-semibold mb-1">7:00 PM</p>
-                <p class="text-sm text-gray-300 mb-6">Salon de eventos  <br>terraza real</p>
+                <p class="text-xl font-semibold mb-1 text-white">7:00 PM</p>
+                <p class="text-sm text-gray-300 mb-6">Salón de eventos<br><span class="font-semibold text-gold-300">Terraza Real</span></p>
                 
-                <div class="w-full aspect-video bg-gray-700 rounded-lg overflow-hidden mb-6 border border-gold-500/50">
-                    <!-- Map Placeholder -->
-                    <div class="w-full h-full flex flex-col items-center justify-center bg-[#2a4a34] text-gold-400">
-                        <i class="fas fa-map text-3xl mb-2"></i>
-                        <span class="text-xs"><iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31813.54572899586!2d-74.14491100046743!3d4.648700625523713!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9c1742a0f14d%3A0xe1d0fc4de7ad83a8!2sSalon%20De%20Eventos%20Terraza%20Real!5e0!3m2!1ses!2sco!4v1791574576410!5m2!1ses!2sco" width="400" height="300" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe></span>
-
-
-                    </div>
+                <!-- Google Maps (100% Responsivo sin desbordamiento) -->
+                <div class="w-full aspect-[4/3] sm:aspect-video rounded-xl overflow-hidden mb-6 border-2 border-gold-500/50 shadow-md relative bg-forest-900">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31813.54572899586!2d-74.14491100046743!3d4.648700625523713!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9c1742a0f14d%3A0xe1d0fc4de7ad83a8!2sSalon%20De%20Eventos%20Terraza%20Real!5e0!3m2!1ses!2sco!4v1791574576410!5m2!1ses!2sco" class="w-full h-full border-0 absolute inset-0" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
                 </div>
 
-                <a href="https://www.google.com/maps/dir/?api=1&destination=4.639001766014406, -74.1431280892181" class="inline-block px-6 py-2 bg-gold-500 text-forest-900 font-bold uppercase tracking-wider text-xs rounded-full shadow-[0_4px_15px_rgba(212,175,55,0.4)] hover:shadow-[0_8px_25px_rgba(212,175,55,0.6)] hover:-translate-y-1 hover:scale-105 transition-all duration-300">
+                <a href="https://www.google.com/maps/dir/?api=1&destination=4.639001766014406,-74.1431280892181" target="_blank" class="inline-block px-7 py-3 bg-gold-500 hover:bg-gold-400 text-forest-900 font-bold uppercase tracking-wider text-xs sm:text-sm rounded-full shadow-[0_4px_15px_rgba(212,175,55,0.4)] hover:shadow-[0_8px_25px_rgba(212,175,55,0.6)] hover:-translate-y-0.5 hover:scale-105 transition-all duration-300">
                     Ver Ubicación
                 </a>
             </div>
         </section>
 
-        <section class="w-full max-w-md mx-auto mt-20 px-6 fade-in-up">
+        <!-- SECCIÓN: ITINERARIO -->
+        <section class="w-full max-w-sm sm:max-w-md mx-auto mt-20 px-4 sm:px-6 fade-in-up">
             <h3 class="font-cursive text-5xl text-center gold-foil mb-10">Itinerario</h3>
             
             <div class="relative border-l-2 border-gold-500/30 ml-4 space-y-10 pb-4">
                 <!-- Item 1 -->
-                <div class="relative pl-8 group transition-all duration-300 hover:scale-105 hover:bg-forest-800/40 rounded-r-lg py-2 -my-2 cursor-default">
+                <div class="relative pl-8 group transition-all duration-300 rounded-r-lg py-2 -my-2 cursor-default">
                     <div class="absolute -left-[17px] top-2 w-8 h-8 bg-forest-900 border-2 border-gold-400 rounded-full flex items-center justify-center text-gold-400 group-hover:bg-gold-500 group-hover:text-forest-900 transition-colors duration-300">
                         <i class="fas fa-church text-xs"></i>
                     </div>
@@ -422,7 +860,7 @@
                     <p class="text-sm text-gray-400">16:00 hrs</p>
                 </div>
                 <!-- Item 2 -->
-                <div class="relative pl-8 group transition-all duration-300 hover:scale-105 hover:bg-forest-800/40 rounded-r-lg py-2 -my-2 cursor-default">
+                <div class="relative pl-8 group transition-all duration-300 rounded-r-lg py-2 -my-2 cursor-default">
                     <div class="absolute -left-[17px] top-2 w-8 h-8 bg-forest-900 border-2 border-gold-400 rounded-full flex items-center justify-center text-gold-400 group-hover:bg-gold-500 group-hover:text-forest-900 transition-colors duration-300">
                         <i class="fas fa-glass-cheers text-xs"></i>
                     </div>
@@ -430,7 +868,7 @@
                     <p class="text-sm text-gray-400">18:00 hrs</p>
                 </div>
                 <!-- Item 3 -->
-                <div class="relative pl-8 group transition-all duration-300 hover:scale-105 hover:bg-forest-800/40 rounded-r-lg py-2 -my-2 cursor-default">
+                <div class="relative pl-8 group transition-all duration-300 rounded-r-lg py-2 -my-2 cursor-default">
                     <div class="absolute -left-[17px] top-2 w-8 h-8 bg-forest-900 border-2 border-gold-400 rounded-full flex items-center justify-center text-gold-400 group-hover:bg-gold-500 group-hover:text-forest-900 transition-colors duration-300">
                         <i class="fas fa-utensils text-xs"></i>
                     </div>
@@ -438,7 +876,7 @@
                     <p class="text-sm text-gray-400">19:30 hrs</p>
                 </div>
                  <!-- Item 4 -->
-                 <div class="relative pl-8 group transition-all duration-300 hover:scale-105 hover:bg-forest-800/40 rounded-r-lg py-2 -my-2 cursor-default">
+                 <div class="relative pl-8 group transition-all duration-300 rounded-r-lg py-2 -my-2 cursor-default">
                     <div class="absolute -left-[17px] top-2 w-8 h-8 bg-forest-900 border-2 border-gold-400 rounded-full flex items-center justify-center text-gold-400 group-hover:bg-gold-500 group-hover:text-forest-900 transition-colors duration-300">
                         <i class="fas fa-music text-xs"></i>
                     </div>
@@ -448,7 +886,8 @@
             </div>
         </section>
 
-        <section class="w-full max-w-md mx-auto mt-20 px-6 space-y-8 fade-in-up">
+        <!-- SECCIÓN: DETALLES (LLUVIA DE SOBRES, NIÑOS, DRESS CODE) -->
+        <section class="w-full max-w-sm sm:max-w-md mx-auto mt-20 px-4 sm:px-6 space-y-6 sm:space-y-8 fade-in-up">
             <!-- Gifts -->
             <div class="bg-forest-800/40 p-6 rounded-xl border border-gold-500/20 text-center hover-lift cursor-default">
                 <i class="fas fa-envelope-open-text text-3xl text-gold-400 mb-3"></i>
@@ -477,26 +916,26 @@
             </div>
         </section>
 
-        <section class="w-full max-w-md mx-auto mt-20 px-6 text-center fade-in-up pb-12">
+        <!-- SECCIÓN: CONFIRMAR ASISTENCIA -->
+        <section class="w-full max-w-sm sm:max-w-md mx-auto mt-20 px-4 sm:px-6 text-center fade-in-up pb-12">
             <h3 class="font-cursive text-5xl gold-foil mb-4">Confirmar Asistencia</h3>
             <p class="text-sm text-gray-300 mb-8">Por favor, confirma tu asistencia lo antes posible.</p>
             
             <div class="flex flex-col space-y-4 w-full">
                 <!-- Botón de Confirmación -->
-                <a href="https://wa.me/573000000000?text=¡Hola!%20Confirmo%20mi%20asistencia%20a%20los%20XV%20años%20de%20Juliettha.%20¡Allí%20estaré!" target="_blank" class="w-full py-3 sm:py-4 bg-[#25D366] hover:bg-[#1ebe57] text-white font-bold rounded-full shadow-[0_0_20px_rgba(37,211,102,0.4)] hover:shadow-[0_0_30px_rgba(37,211,102,0.8)] transform hover:-translate-y-1 hover:scale-105 transition-all duration-300 flex items-center justify-center text-sm sm:text-lg space-x-2 px-4">
+                <a href="https://wa.me/573204498275?text=%C2%A1Hola!%20Confirmo%20mi%20asistencia%20a%20los%20XV%20a%C3%B1os%20de%20Saira.%20%C2%A1All%C3%AD%20estar%C3%A9!" target="_blank" class="w-full py-3 sm:py-4 bg-[#25D366] hover:bg-[#1ebe57] text-white font-bold rounded-full shadow-[0_0_20px_rgba(37,211,102,0.4)] hover:shadow-[0_0_30px_rgba(37,211,102,0.8)] transform hover:-translate-y-0.5 hover:scale-[1.02] active:scale-95 transition-all duration-300 flex items-center justify-center text-sm sm:text-base space-x-2 px-4">
                     <i class="fab fa-whatsapp text-xl sm:text-2xl"></i>
                     <span class="truncate">Sí, confirmo mi asistencia</span>
                 </a>
                 
                 <!-- Botón de Declinación -->
-                <a href="https://wa.me/573000000000?text=¡Hola!%20Lamentablemente%20no%20podré%20asistir%20a%20los%20XV%20años%20de%20Juliettha.%20¡Les%20deseo%20una%20noche%20mágica!" target="_blank" class="w-full py-3 sm:py-4 bg-forest-800/80 hover:bg-forest-700 border border-gold-500/30 hover:border-gold-500 text-gray-300 hover:text-white font-bold rounded-full transform hover:-translate-y-1 hover:scale-105 transition-all duration-300 flex items-center justify-center text-sm sm:text-lg space-x-2 px-4">
+                <a href="https://wa.me/573204498275?text=%C2%A1Hola!%20Lamentablemente%20no%20podr%C3%A9%20asistir%20a%20los%20XV%20a%C3%B1os%20de%20Saira.%20%C2%A1Les%20deseo%20una%20noche%20m%C3%A1gica!" target="_blank" class="w-full py-3 sm:py-4 bg-forest-800/80 hover:bg-forest-700 border border-gold-500/30 hover:border-gold-500 text-gray-300 hover:text-white font-bold rounded-full transform hover:-translate-y-0.5 hover:scale-[1.02] active:scale-95 transition-all duration-300 flex items-center justify-center text-sm sm:text-base space-x-2 px-4">
                     <i class="fas fa-envelope text-xl sm:text-2xl"></i>
                     <span class="truncate">No podré asistir</span>
                 </a>
             </div>
             <p class="text-xs text-gold-400 italic mt-6">¡Esperamos verte y celebrar juntos!</p>
         </section>
-
     </main>
 
     <!-- Floating Music Toggle -->
@@ -519,12 +958,65 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             
-            // --- 1. Book Opening Logic ---
+            // --- 1. Antique & Shiny Book Logic ---
             const bookContainer = document.getElementById('book-container');
+            const bookPerspectiveWrapper = document.getElementById('book-perspective-wrapper');
             const bookCover = document.getElementById('book-cover');
             const mainContent = document.getElementById('main-content');
-            
+            let isBookOpen = false;
+
+            // Interactive 3D Perspective Tilt & Specular Light Sheen
+            if (bookContainer && bookCover && bookPerspectiveWrapper) {
+                const handlePointerMove = (e) => {
+                    if (isBookOpen) return;
+                    
+                    const rect = bookCover.getBoundingClientRect();
+                    const clientX = e.clientX ?? (e.touches && e.touches[0] ? e.touches[0].clientX : null);
+                    const clientY = e.clientY ?? (e.touches && e.touches[0] ? e.touches[0].clientY : null);
+                    
+                    if (clientX === null || clientY === null) return;
+                    
+                    const x = clientX - rect.left;
+                    const y = clientY - rect.top;
+                    
+                    // Coordinates as percentages for the shiny light reflection
+                    const px = Math.max(0, Math.min(100, (x / rect.width) * 100));
+                    const py = Math.max(0, Math.min(100, (y / rect.height) * 100));
+                    
+                    bookCover.style.setProperty('--sheen-x', `${px.toFixed(1)}%`);
+                    bookCover.style.setProperty('--sheen-y', `${py.toFixed(1)}%`);
+                    
+                    // Natural 3D tilt angles (up to 7 degrees)
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const tiltY = ((x - centerX) / centerX) * 7;
+                    const tiltX = -((y - centerY) / centerY) * 7;
+                    
+                    bookPerspectiveWrapper.style.transform = `rotateX(${tiltX.toFixed(2)}deg) rotateY(${tiltY.toFixed(2)}deg)`;
+                };
+
+                const handlePointerLeave = () => {
+                    if (isBookOpen) return;
+                    bookPerspectiveWrapper.style.transform = 'rotateX(0deg) rotateY(0deg)';
+                    bookCover.style.setProperty('--sheen-x', '50%');
+                    bookCover.style.setProperty('--sheen-y', '35%');
+                };
+
+                bookContainer.addEventListener('mousemove', handlePointerMove);
+                bookContainer.addEventListener('mouseleave', handlePointerLeave);
+                bookContainer.addEventListener('touchmove', handlePointerMove, { passive: true });
+                bookContainer.addEventListener('touchend', handlePointerLeave);
+            }
+
             bookCover.addEventListener('click', () => {
+                if (isBookOpen) return;
+                isBookOpen = true;
+
+                // Reset tilt smoothly so the cover swings open cleanly
+                if (bookPerspectiveWrapper) {
+                    bookPerspectiveWrapper.style.transform = 'rotateX(0deg) rotateY(0deg)';
+                }
+
                 // Animate book cover opening
                 bookCover.classList.add('open');
                 
@@ -543,7 +1035,7 @@
                         const mToggle = document.getElementById('music-toggle');
                         if(mToggle) mToggle.classList.remove('opacity-0', 'pointer-events-none');
                     }, 1000);
-                }, 500); // Wait a bit for the cover to swing open before fading the background
+                }, 600); // Gives time to see the cover swing open and reveal the inside page
             });
 
             // --- 2. Intersection Observer for Fade-in Animations ---
@@ -596,67 +1088,6 @@
 
             // --- 4. Particles removed in favor of video background ---
 
-            // --- 5. 3D Carousel Logic ---
-            const carouselItems = document.querySelectorAll('.carousel-item');
-            const dots = document.querySelectorAll('.dot');
-            let currentCarouselIndex = 0;
-            const totalItems = carouselItems.length;
-
-            function updateCarousel() {
-                carouselItems.forEach((item, index) => {
-                    item.className = 'carousel-item'; // reset
-                    if (index === currentCarouselIndex) {
-                        item.classList.add('item-active');
-                    } else if (index === (currentCarouselIndex - 1 + totalItems) % totalItems) {
-                        item.classList.add('item-prev');
-                    } else if (index === (currentCarouselIndex + 1) % totalItems) {
-                        item.classList.add('item-next');
-                    } else if (index === (currentCarouselIndex - 2 + totalItems) % totalItems) {
-                        item.classList.add('item-hidden-prev');
-                    } else {
-                        item.classList.add('item-hidden-next');
-                    }
-                });
-
-                dots.forEach((dot, index) => {
-                    if(index === currentCarouselIndex) {
-                        dot.className = 'dot w-2 h-2 rounded-full bg-gold-500 cursor-pointer transition-all hover:scale-125';
-                    } else {
-                        dot.className = 'dot w-2 h-2 rounded-full bg-gold-500/30 cursor-pointer transition-all hover:bg-gold-500/60 hover:scale-125';
-                    }
-                });
-            }
-
-            document.getElementById('btn-prev').addEventListener('click', () => {
-                currentCarouselIndex = (currentCarouselIndex - 1 + totalItems) % totalItems;
-                updateCarousel();
-            });
-            document.getElementById('btn-next').addEventListener('click', () => {
-                currentCarouselIndex = (currentCarouselIndex + 1) % totalItems;
-                updateCarousel();
-            });
-            
-            dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => {
-                    currentCarouselIndex = index;
-                    updateCarousel();
-                });
-            });
-
-            carouselItems.forEach((item, index) => {
-                item.addEventListener('click', () => {
-                    if (item.classList.contains('item-prev')) {
-                        currentCarouselIndex = (currentCarouselIndex - 1 + totalItems) % totalItems;
-                        updateCarousel();
-                    } else if (item.classList.contains('item-next')) {
-                        currentCarouselIndex = (currentCarouselIndex + 1) % totalItems;
-                        updateCarousel();
-                    } else if (item.classList.contains('item-active')) {
-                        openLightbox(item.querySelector('img').src);
-                    }
-                });
-            });
-
             // --- 6. Lightbox Logic ---
             const lightbox = document.getElementById('lightbox');
             const lightboxImg = document.getElementById('lightbox-img');
@@ -667,6 +1098,7 @@
                 lightbox.classList.remove('opacity-0', 'pointer-events-none');
                 setTimeout(() => lightboxImg.classList.remove('scale-95'), 50);
             }
+            window.openLightbox = openLightbox;
             function hideLightbox() {
                 lightbox.classList.add('opacity-0', 'pointer-events-none');
                 lightboxImg.classList.add('scale-95');
