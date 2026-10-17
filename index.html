@@ -468,6 +468,66 @@
                 inset 0 1px 2px rgba(255, 255, 255, 0.28);
         }
 
+        /* ==========================================================================
+           ESTILOS EDITORIALES PARA EL CAPÍTULO DE DEDICATORIA Y CARTA REAL
+           ========================================================================== */
+        .royal-dropcap {
+            float: left;
+            font-family: 'Cinzel Decorative', serif;
+            font-size: 3.3rem;
+            line-height: 0.82;
+            padding-top: 0.15rem;
+            padding-right: 0.65rem;
+            padding-bottom: 0.1rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff8cc 0%, #d4af37 50%, #996515 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: drop-shadow(0 2px 8px rgba(212, 175, 55, 0.5));
+        }
+
+        .editorial-paragraph-box {
+            position: relative;
+            padding: 1.15rem 1.25rem;
+            border-radius: 1.25rem;
+            background: linear-gradient(145deg, rgba(15, 46, 28, 0.55) 0%, rgba(5, 17, 10, 0.45) 100%);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.08), 0 8px 20px rgba(0, 0, 0, 0.35);
+            transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .editorial-paragraph-box:hover {
+            border-color: rgba(212, 175, 55, 0.55);
+            background: linear-gradient(145deg, rgba(18, 56, 34, 0.7) 0%, rgba(8, 26, 15, 0.6) 100%);
+            transform: translateY(-3px);
+            box-shadow: inset 0 1px 2px rgba(255, 248, 205, 0.2), 0 14px 30px rgba(0, 0, 0, 0.55), 0 0 25px rgba(212, 175, 55, 0.18);
+        }
+
+        .editorial-quote-highlight {
+            position: relative;
+            padding: 1.35rem 1.4rem;
+            border-radius: 1.35rem;
+            background: radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.16) 0%, rgba(10, 31, 20, 0.65) 85%);
+            border: 1px solid rgba(212, 175, 55, 0.45);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.55), inset 0 0 25px rgba(212, 175, 55, 0.1);
+            transition: all 0.45s ease;
+        }
+
+        .editorial-quote-highlight:hover {
+            border-color: rgba(252, 240, 194, 0.75);
+            box-shadow: 0 15px 38px rgba(0, 0, 0, 0.7), 0 0 30px rgba(212, 175, 55, 0.28);
+            transform: scale(1.015);
+        }
+
+        @keyframes gentlePulseGlow {
+            0%, 100% { filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.4)); transform: scale(1); }
+            50% { filter: drop-shadow(0 0 14px rgba(255, 243, 168, 0.85)); transform: scale(1.08); }
+        }
+        .heart-royal-glow {
+            animation: gentlePulseGlow 3s ease-in-out infinite;
+        }
+
         /* Generous Minimalist Chapter Pacing & Separation */
         .section-chapter {
             position: relative;
@@ -1146,13 +1206,117 @@
             </div>
         </section>
 
-        <!-- SECCIÓN 02: FECHA Y CUENTA REGRESIVA -->
+        <!-- =========================================================================
+             NUEVA SECCIÓN 02: CARTA EDITORIAL DE LOS PADRES (NUESTRA PRINCESA)
+             ========================================================================= -->
+        <section class="section-chapter gsap-reveal" id="chapter-story">
+            <div class="watermark-bg">HISTORIA</div>
+
+            <div class="text-center mb-6">
+                <div class="chapter-badge">
+                    <span>02</span>
+                    <span class="text-gold-500/50">·</span>
+                    <span>Palabras del Corazón</span>
+                </div>
+                <h3 class="font-cursive text-5xl sm:text-6xl gold-foil drop-shadow-md">Nuestra Princesa</h3>
+            </div>
+
+            <div class="glass-card p-6 sm:p-10 relative overflow-hidden">
+                <!-- Halos de luz ambiental de fondo -->
+                <div class="ambient-halo halo-gold w-72 h-72 -top-12 -left-12"></div>
+                <div class="ambient-halo halo-emerald w-72 h-72 -bottom-12 -right-12"></div>
+
+                <!-- Destellos flotantes decorativos en las esquinas -->
+                <span class="sparkle-twinkle absolute top-5 left-5 text-gold-300/80 text-xs pointer-events-none">✦</span>
+                <span class="sparkle-twinkle sparkle-twinkle-delay-1 absolute top-5 right-5 text-gold-300/80 text-xs pointer-events-none">✦</span>
+                <span class="sparkle-twinkle sparkle-twinkle-delay-2 absolute bottom-5 left-5 text-gold-300/80 text-xs pointer-events-none">✦</span>
+                <span class="sparkle-twinkle sparkle-twinkle-delay-3 absolute bottom-5 right-5 text-gold-300/80 text-xs pointer-events-none">✦</span>
+
+                <!-- Borde interior ornamental sutil -->
+                <div class="absolute inset-3 sm:inset-4 border border-gold-400/20 rounded-2xl pointer-events-none"></div>
+
+                <!-- Encabezado Editorial con Pluma Real -->
+                <div class="relative z-10 text-center mb-7 gsap-card">
+                    <div class="w-12 h-12 rounded-full bg-gold-500/15 border border-gold-400/40 flex items-center justify-center mx-auto mb-3 text-gold-300 shadow-[0_0_20px_rgba(212,175,55,0.25)]">
+                        <i class="fas fa-feather-pointed text-lg"></i>
+                    </div>
+                    <div class="flex items-center justify-center gap-3">
+                        <span class="w-10 h-[1px] bg-gradient-to-r from-transparent to-gold-400/60"></span>
+                        <span class="text-[10px] sm:text-xs uppercase tracking-[0.3em] text-gold-300/90 font-sans font-semibold">Un Recuerdo Para Siempre</span>
+                        <span class="w-10 h-[1px] bg-gradient-to-l from-transparent to-gold-400/60"></span>
+                    </div>
+                </div>
+
+                <!-- Contenedor de Párrafos Animados -->
+                <div class="relative z-10 space-y-5 text-left sm:text-justify">
+                    
+                    <!-- Párrafo 1 con Letra Capital Iluminada (Drop Cap) -->
+                    <div class="editorial-paragraph-box gsap-card group">
+                        <p class="text-xs sm:text-sm text-gold-100/95 font-serif leading-relaxed">
+                            <span class="royal-dropcap">H</span>ay momentos en la vida que se convierten en recuerdos para siempre, y hoy nos llena de emoción celebrar uno de los más hermosos: <span class="text-gold-300 font-semibold italic">los quince años de nuestra princesa.</span>
+                        </p>
+                    </div>
+
+                    <!-- Párrafo 2 -->
+                    <div class="editorial-paragraph-box gsap-card group">
+                        <div class="flex items-start gap-3">
+                            <span class="text-gold-400/70 text-xs mt-1 select-none">✦</span>
+                            <p class="text-xs sm:text-sm text-gray-200/95 font-sans leading-relaxed">
+                                Parece que fue ayer cuando llegó a nuestras vidas para llenarlas de amor, y hoy la vemos florecer, llena de sueños, ilusiones y una <span class="text-gold-200 font-medium">luz propia</span> que ilumina cada uno de nuestros días.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Divisor Filigrana Dorada -->
+                    <div class="flex items-center justify-center py-1 gsap-card">
+                        <svg class="w-40 h-5 text-gold-400/70" viewBox="0 0 200 24" fill="none">
+                            <path d="M10 12 C50 12, 65 4, 90 12 C70 20, 50 12, 10 12 Z" fill="url(#goldFoilGrad)" opacity="0.6"/>
+                            <path d="M190 12 C150 12, 135 4, 110 12 C130 20, 150 12, 190 12 Z" fill="url(#goldFoilGrad)" opacity="0.6"/>
+                            <circle cx="100" cy="12" r="3" fill="#fff9d2"/>
+                        </svg>
+                    </div>
+
+                    <!-- Párrafo 3 (Destacado Central en Estilo Cita Imperial) -->
+                    <div class="editorial-quote-highlight gsap-card text-center">
+                        <i class="fas fa-quote-left text-gold-400/30 text-xl mb-1 block"></i>
+                        <p class="text-xs sm:text-sm text-gold-100 font-serif italic leading-relaxed px-1">
+                            Celebrar esta fecha es mucho más que cumplir quince años; es honrar su historia, abrazar cada recuerdo y dar la bienvenida a una nueva etapa llena de <span class="gold-foil font-bold not-italic">magia y esperanza.</span>
+                        </p>
+                    </div>
+
+                    <!-- Párrafo 4 -->
+                    <div class="editorial-paragraph-box gsap-card group">
+                        <div class="flex items-start gap-3">
+                            <span class="text-gold-400/70 text-xs mt-1 select-none">✦</span>
+                            <p class="text-xs sm:text-sm text-gray-200/95 font-sans leading-relaxed">
+                                Por eso, queremos compartir esta noche tan especial con quienes hacen parte de nuestra historia y de nuestra felicidad, porque los momentos más bonitos de la vida cobran aún más sentido cuando se viven junto a las personas que amamos.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Párrafo 5 (Cierre Emotivo con Sello Real) -->
+                    <div class="pt-4 pb-2 text-center gsap-card">
+                        <div class="w-24 h-[1px] bg-gradient-to-r from-transparent via-gold-400/70 to-transparent mx-auto mb-4"></div>
+                        <div class="inline-flex items-center justify-center w-9 h-9 rounded-full bg-gold-500/15 border border-gold-400/50 text-gold-300 mb-3 heart-royal-glow">
+                            <i class="fas fa-heart text-xs"></i>
+                        </div>
+                        <p class="text-sm sm:text-base font-serif italic text-gold-200 leading-relaxed max-w-xs mx-auto drop-shadow-sm">
+                            «Gracias por ser parte de este recuerdo que quedará para siempre en nuestros corazones.»
+                        </p>
+                        <p class="font-cursive text-3xl sm:text-4xl gold-foil mt-3">Con amor, su familia</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SECCIÓN 03: FECHA Y CUENTA REGRESIVA -->
         <section class="section-chapter text-center gsap-reveal" id="chapter-date">
             <div class="watermark-bg">14 · NOV</div>
 
             <div class="text-center">
                 <div class="chapter-badge">
-                    <span>02</span>
+                    <span>03</span>
                     <span class="text-gold-500/50">·</span>
                     <span>La Fecha</span>
                 </div>
@@ -1203,13 +1367,13 @@
             </div>
         </section>
 
-        <!-- SECCIÓN 03: HORA Y LUGAR -->
+        <!-- SECCIÓN 04: HORA Y LUGAR -->
         <section class="section-chapter text-center gsap-reveal" id="chapter-location">
             <div class="watermark-bg">TERRAZA</div>
 
             <div class="text-center">
                 <div class="chapter-badge">
-                    <span>03</span>
+                    <span>04</span>
                     <span class="text-gold-500/50">·</span>
                     <span>El Lugar</span>
                 </div>
@@ -1258,13 +1422,13 @@
             </div>
         </section>
 
-        <!-- SECCIÓN 04: ITINERARIO VIVIENTE -->
+        <!-- SECCIÓN 05: ITINERARIO VIVIENTE -->
         <section class="section-chapter gsap-reveal" id="itinerario-section">
             <div class="watermark-bg">PROGRAMA</div>
 
             <div class="text-center mb-8">
                 <div class="chapter-badge">
-                    <span>04</span>
+                    <span>05</span>
                     <span class="text-gold-500/50">·</span>
                     <span>Itinerario</span>
                 </div>
@@ -1337,13 +1501,13 @@
             </div>
         </section>
 
-        <!-- SECCIÓN 05: DETALLES DE LUJO -->
+        <!-- SECCIÓN 06: DETALLES DE LUJO -->
         <section class="section-chapter gsap-reveal" id="chapter-details">
             <div class="watermark-bg">DETALLES</div>
 
             <div class="text-center mb-8">
                 <div class="chapter-badge">
-                    <span>05</span>
+                    <span>06</span>
                     <span class="text-gold-500/50">·</span>
                     <span>Información</span>
                 </div>
@@ -1394,13 +1558,13 @@
             </div>
         </section>
 
-        <!-- SECCIÓN 06: CONFIRMAR ASISTENCIA -->
+        <!-- SECCIÓN 07: CONFIRMAR ASISTENCIA -->
         <section class="section-chapter text-center gsap-reveal min-h-[75vh] flex flex-col justify-center" id="chapter-rsvp">
             <div class="watermark-bg">R.S.V.P.</div>
 
             <div class="text-center">
                 <div class="chapter-badge">
-                    <span>06</span>
+                    <span>07</span>
                     <span class="text-gold-500/50">·</span>
                     <span>Asistencia VIP</span>
                 </div>
